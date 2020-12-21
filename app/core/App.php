@@ -1,48 +1,24 @@
 <?php
-require_once 'Controller.php';
+require_once 'app/core/Route.php';
 
-class App extends Controller
-{
-    protected $mod = 'HomeController';
-    protected $act = 'index';
-    protected $prarams = [];
+define('PATH_ROOT', __DIR__);
 
-    public function __construct()
-    {
-        $url = $this->urlProcess();
-        ucfirst($url[0]);
+// Autoload class trong PHP
+spl_autoload_register(function (string $class_name) {
+    include_once PATH_ROOT . '/' . $class_name . '.php';
+});
 
-        //Xử lý lấy controller
-        if (file_exists("./app/controllers/" . ucfirst($url[0]) . "Controller.php")) {
-            $this->mod = ucfirst($url[0]) . 'Controller';
-            unset($url[0]);
-        }
 
-        $controller = $this->getController($this->mod);
+// load class Route
+$router = new Route();
+require_once 'app/routes.php';
 
-        //Xử lý lấy action
-        if (isset($url[1])) {
-            if (method_exists($controller, ucfirst($url[1]))) {
-                $this->act = ucfirst($url[1]);
-                unset($url[1]);
-            }
-        }
+// Lấy url hiện tại của trang web. Mặc định la /
+$request_url = !empty($_GET['url']) ? '/' . $_GET['url'] : '/';
 
-        //XỬ lý các biến truyền vào phương thức
-        $this->prarams = $url ? array_values($url) : [];
+// Lấy phương thức hiện tại của url đang được gọi. (GET | POST). Mặc định là GET.
+$method_url = !empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
 
-        //Thực thi chức năng
-        call_user_func_array([$controller, $this->act], $this->prarams);
 
-    }
-
-    public function urlProcess()
-    {
-        if (isset($_GET["url"])) {
-            $url = $_GET["url"];
-            $url = $url[strlen($url) - 1] == "/" && strlen($url) != 1 ? $url : $url . "/";
-            return explode("/", filter_var(trim($url)));
-        }
-        return [""];
-    }
-}
+// map URL
+$router->map($request_url, $method_url);
