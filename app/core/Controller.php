@@ -2,7 +2,7 @@
 
 class Controller
 {
-    public function controller($controllers)
+    public function getController($controllers)
     {
         require_once "app/controllers/" . $controllers . ".php";
         return new $controllers;
@@ -19,3 +19,5 @@ class Controller
         header("location: $path");
     }
 }
+
+?>

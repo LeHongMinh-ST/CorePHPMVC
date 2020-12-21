@@ -11,8 +11,8 @@ class Connection
     {
         $this->servername = 'localhost';
         $this->username = 'root';
-        $this->password = '';
-        $this->dbname = 'test';
+        $this->password = '798960';
+        $this->dbname = 'class.rooms';
     }
 
     function connect()

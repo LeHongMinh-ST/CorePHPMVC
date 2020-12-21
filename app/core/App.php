@@ -18,8 +18,7 @@ class App extends Controller
             unset($url[0]);
         }
 
-        $controller = $this->controller($this->mod);
-
+        $controller = $this->getController($this->mod);
 
         //Xử lý lấy action
         if (isset($url[1])) {

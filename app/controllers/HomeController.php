@@ -1,9 +1,9 @@
 <?php
 
-
-class HomeController
+require_once 'app/core/Controller.php';
+class HomeController extends Controller
 {
     public function index(){
-        echo "Đây là trang chủ";
+        return $this->views("home");
     }
 }
