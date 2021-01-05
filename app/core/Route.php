@@ -26,7 +26,7 @@ class Route{
      * @return void
      * 
      */
-    public function get(string $url, $action)
+    public function get($url, $action)
     {
             // Xử lý phương thức GET
             $this->__request($url, 'GET', $action);
@@ -42,7 +42,7 @@ class Route{
      * @return void
      * 
      */
-    public function post(string $url, $action)
+    public function post($url, $action)
     {
          // Xử lý phương thức POST
          $this->__request($url, 'POST', $action);
@@ -59,7 +59,7 @@ class Route{
      * @return void
      * 
      */
-    private function __request(string $url, string $method, $action)
+    private function __request($url,$method, $action)
     {
         // kiểm tra xem URL có chứa param không. VD: post/{id}
         if (preg_match_all('/({([a-zA-Z]+)})/', $url, $params)) {
@@ -83,7 +83,7 @@ class Route{
     }
 
 
-    public function map(string $url, string $method)
+    public function map($url, $method)
     {
         // Lặp qua các route trong ứng dụng, kiểm tra có chứa url được gọi không
         foreach ($this->__routes as $route) {

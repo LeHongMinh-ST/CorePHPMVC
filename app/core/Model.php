@@ -7,11 +7,18 @@ class Model
     protected $table;
     private $col;
     private $condition;
+    private $order;
+    private $limit;
 
     function __construct()
     {
         $conn = new Connection();
         $this->connection = $conn->connect();
+
+        $this->col = null;
+        $this->condition = null;
+        $this->order = null;
+        $this->limit = null;
     }
 
     public function all()
@@ -56,7 +63,14 @@ class Model
     {
         $col = ($this->col) ? $this->col : '*';
         $condition = ($this->condition) ? $this->condition : '1';
-        $query = "SELECT $col FROM $this->table WHERE $condition ";
+        $query = "SELECT $col FROM $this->table WHERE $condition";
+
+
+        if($this->order !=null)
+            $query .= " ORDER BY " . $this->order;
+
+        if ($this->limit != null)
+            $query .= " LIMIT " . $this->limit;
 
         $result = $this->connection->query($query);
 
@@ -214,5 +228,17 @@ class Model
         $result = $this->connection->query($query);
 
         return $result;
+    }
+
+    public function orderBy($col, $order = 'ASC'){
+
+        $string = $col . ' ' . $order;
+        $this->order = $string;
+        return $this;
+    }
+
+    public function limit($number){
+        $this->limit = $number;
+        return $this;
     }
 }
