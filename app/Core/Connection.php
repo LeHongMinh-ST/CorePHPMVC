@@ -1,5 +1,7 @@
 <?php
 
+namespace app\Core;
+
 class Connection
 {
     private $servername;
@@ -11,14 +13,14 @@ class Connection
     {
         $this->servername = 'localhost';
         $this->username = 'root';
-        $this->password = '';
-        $this->dbname = 'core.php.mvc';
+        $this->password = '798960';
+        $this->dbname = 'blog.minh.php';
     }
 
     function connect()
     {
 
-        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $conn = mysqli_connect($this->servername, $this->username, $this->password, $this->dbname);
         mysqli_set_charset($conn, "UTF8");
         if ($conn->connect_errno) {
             echo "fail" . $conn->connect_error;

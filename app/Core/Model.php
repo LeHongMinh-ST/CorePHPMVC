@@ -1,5 +1,6 @@
 <?php
-require_once 'Connection.php';
+
+namespace app\Core;
 
 class Model
 {
@@ -23,7 +24,7 @@ class Model
 
     public function all()
     {
-        $query = "SELECT * FROM $this->table ";
+        $query = "SELECT * FROM " . $this->table;
 
         $result = $this->connection->query($query);
 
@@ -66,7 +67,7 @@ class Model
         $query = "SELECT $col FROM $this->table WHERE $condition";
 
 
-        if($this->order !=null)
+        if ($this->order != null)
             $query .= " ORDER BY " . $this->order;
 
         if ($this->limit != null)
@@ -230,14 +231,16 @@ class Model
         return $result;
     }
 
-    public function orderBy($col, $order = 'ASC'){
+    public function orderBy($col, $order = 'ASC')
+    {
 
         $string = $col . ' ' . $order;
         $this->order = $string;
         return $this;
     }
 
-    public function limit($number){
+    public function limit($number)
+    {
         $this->limit = $number;
         return $this;
     }

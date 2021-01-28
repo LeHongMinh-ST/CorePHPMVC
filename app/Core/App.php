@@ -1,7 +1,9 @@
 <?php
-require_once 'app/core/Route.php';
 
-class App{
+namespace app\Core;
+
+class App
+{
     public function __construct()
     {
         // load class Route

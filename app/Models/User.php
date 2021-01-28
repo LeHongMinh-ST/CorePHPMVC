@@ -1,7 +1,7 @@
 <?php
+namespace app\Models;
 
-require_once "app/core/Model.php";
-
+use app\Core\Model;
 class User extends Model{
 
     protected $table = 'users';
